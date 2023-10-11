@@ -160,6 +160,24 @@ void opcontrol() {
 
   while (true) {
 
+    pros::Motor intake (10);
+    pros::Controller master (CONTROLLER_MASTER);
+
+    // test code move robot forward/backward
+    if (master.get_digital(DIGITAL_R1)) {
+      intake.move_velocity(100); // This is 100 because it's a 100rpm motor
+    }
+    else if (master.get_digital(DIGITAL_R2)) {
+      intake.move_velocity(-100);
+    } else {
+      intake.set_brake_mode(MOTOR_BRAKE_COAST);
+      intake.brake();
+    }
+
+    if (master.get_digital(DIGITAL_A)) {
+      autonomous();
+    }
+
     chassis.tank(); // Tank control
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
