@@ -23,7 +23,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	arms::init()
+	arms::init();
 }
 
 /**
@@ -78,15 +78,13 @@ void opcontrol() {
 			.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
 			.withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
 			.build();
-
 		std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
 
 		Controller controller;
 		ControllerButton intakeInButton(ControllerDigital::R1);
 		ControllerButton intakeOutButton(ControllerDigital::L1);
 		Motor intakeMotor(15);
-
-
+		drive.forward(10);
 	while (true) {
 		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
 
