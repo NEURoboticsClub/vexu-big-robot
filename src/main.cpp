@@ -16,8 +16,6 @@ void on_center_button() {
 	}
 }
 
-XDriveModel XDrive = okapi::XDriveModel({2,-3},{4,-5},{17,-18},{11,-12});
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -58,7 +56,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	XDrive.driveVector(10.0);
+
 }
 
 /**
@@ -87,6 +85,8 @@ void opcontrol() {
 		ControllerButton intakeOutButton(ControllerDigital::L1);
 		Motor intakeMotor(15);
 		drive.forward(10);
+		
+		
 	while (true) {
 		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
 
