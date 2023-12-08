@@ -16,7 +16,7 @@ void on_center_button() {
 	}
 }
 
-XDriveModel = okapi::XDriveModel({2,-3},{4,-5},{17,-18},{11,-12});
+XDriveModel XDrive = okapi::XDriveModel({2,-3},{4,-5},{17,-18},{11,-12});
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
