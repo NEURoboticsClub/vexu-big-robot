@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include "ARMS/config.h"
 /**
  * A callback function for LLEMU's center button.
  *
@@ -23,7 +23,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	
+	arms::init()
 }
 
 /**
@@ -55,7 +55,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
