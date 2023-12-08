@@ -58,7 +58,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+	XDrive.driveVector(10.0);
 }
 
 /**
