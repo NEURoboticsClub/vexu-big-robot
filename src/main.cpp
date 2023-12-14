@@ -23,7 +23,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	arms::init();
+	// arms::init();
 }
 
 /**
@@ -56,7 +56,25 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+	std::shared_ptr<OdomChassisController> odomchas =
+		ChassisControllerBuilder()
+				.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
+				//.withSensors(leftencoder, rightencoder, middleencoder)
+				.withGains(
+					{0.000, 0.00000, 0}, // Distance controller gains
+					{0.000, 0, 0}, // Turn controller gains
+					{0.000, 0, 0.00000}  // Angle controller gains (helps drive straight)
+				 	)
+				.withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, imev5GreenTPR})
+				.withSensors()
+				.withOdometry()
+				.buildOdometry();
 
+		std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(odomchas->getModel());
+	
+	odomchas->setState({0_in,0_in,0_deg});
+	odomchas->driveToPoint({1_ft, 0_ft}, false);
+	odomchas->driveToPoint({0_ft, 1_ft}, true);
 }
 
 /**
@@ -83,9 +101,7 @@ void opcontrol() {
 		Controller controller;
 		ControllerButton intakeInButton(ControllerDigital::R1);
 		ControllerButton intakeOutButton(ControllerDigital::L1);
-		Motor intakeMotor(15);
-		drive.forward(10);
-		
+		Motor intakeMotor(15);		
 		
 	while (true) {
 		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
