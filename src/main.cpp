@@ -66,7 +66,6 @@ void autonomous() {
 					{0.000, 0, 0.00000}  // Angle controller gains (helps drive straight)
 				 	)
 				.withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, imev5GreenTPR})
-				.withSensors()
 				.withOdometry()
 				.buildOdometry();
 
