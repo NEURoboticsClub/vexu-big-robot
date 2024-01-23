@@ -59,21 +59,26 @@ void autonomous() {
 	std::shared_ptr<OdomChassisController> odomchas =
 		ChassisControllerBuilder()
 				.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
-				//.withSensors(leftencoder, rightencoder, middleencoder)
+				.withSensors(
+					RotationSensor{7, true}, // left encoder in ADI ports A & B
+					RotationSensor{8, true},  // right encoder in ADI ports C & D (reversed)
+					RotationSensor{19}  // middle encoder in ADI ports E & F
+				)
 				.withGains(
-					{0.000, 0.00000, 0}, // Distance controller gains
-					{0.000, 0, 0}, // Turn controller gains
-					{0.000, 0, 0.00000}  // Angle controller gains (helps drive straight)
+					{0.0004, 0.00005, 0}, // Distance controller gains
+					{0.0006, 0.0003, 0}, // Turn controller gains
+					{0.0006, 0.0003, 0.00000}  // Angle controller gains (helps drive straight)
 				 	)
-				.withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 7_in, 1_in, 2.75_in}, imev5GreenTPR})
+				.withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 10.5_in, 5.46_in, 2.75_in}, 360})
 				.withOdometry()
 				.buildOdometry();
 
-		std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(odomchas->getModel());
+		// std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(odomchas->getModel());
 	
-	odomchas->setState({0_in,0_in,0_deg});
-	odomchas->driveToPoint({1_ft, 0_ft}, false);
-	odomchas->driveToPoint({0_ft, 1_ft}, true);
+	odomchas->setState({0_m,0_m,0_deg});
+	// odomchas->turnToAngle(180_deg);
+	odomchas->driveToPoint({5_in, 0_m}, false);
+	// odomchas->driveToPoint({0_m, 1_m}, true);
 }
 
 /**
