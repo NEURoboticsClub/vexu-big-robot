@@ -1,20 +1,6 @@
 #include "main.h"
+#include "ARMS/api.h"
 #include "ARMS/config.h"
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -23,7 +9,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// arms::init();
+	arms::init();
 }
 
 /**
@@ -56,29 +42,39 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	std::shared_ptr<OdomChassisController> odomchas =
-		ChassisControllerBuilder()
-				.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
-				.withSensors(
-					RotationSensor{7, true}, // left encoder in ADI ports A & B
-					RotationSensor{8, true},  // right encoder in ADI ports C & D (reversed)
-					RotationSensor{19}  // middle encoder in ADI ports E & F
-				)
-				.withGains(
-					{0.0004, 0.00005, 0}, // Distance controller gains
-					{0.0006, 0.0003, 0}, // Turn controller gains
-					{0.0006, 0.0003, 0.00000}  // Angle controller gains (helps drive straight)
-				 	)
-				.withDimensions(AbstractMotor::gearset::blue, {{2.75_in, 10.5_in, 5.46_in, 2.75_in}, 360})
-				.withOdometry()
-				.buildOdometry();
+	// std::shared_ptr<OdomChassisController> odomchas =
+	// 	ChassisControllerBuilder()
+	// 			.withMotors({-18, -19, -20}, {11, 12, 13})
+	// 			.withGains(
+	// 				{0.0016, 0.00000, 0}, // Distance controller gains
+	// 				{0.0016, 0.0000, 0}, // Turn controller gains
+	// 				{0.0016, 0.0000, 0.00000}  // Angle controller gains (helps drive straight)
+	// 			 	)
+	// 			.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 14.6875_in}, imev5BlueTPR})
+	// 			.withOdometry()
+	// 			.buildOdometry();
 
-		// std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(odomchas->getModel());
 	
-	odomchas->setState({0_m,0_m,0_deg});
+	// odomchas->setState({0_m,0_m,0_deg});
 	// odomchas->turnToAngle(180_deg);
-	odomchas->driveToPoint({5_in, 0_m}, false);
+	// odomchas->driveToPoint({5_in, 0_m}, false);
 	// odomchas->driveToPoint({0_m, 1_m}, true);
+
+	// Configure ARMS parameters
+    ARMS::config robotConfig;
+    robotConfig.wheelbase = 18.0_in; // Example wheelbase in inches
+    robotConfig.wheelDiameter = 4.0_in; // Example wheel diameter in inches
+    // Add other relevant parameters as needed
+
+    // Initialize ARMS controller with configured parameters
+    ARMS::Controller armsController(robotConfig);
+
+    // Define autonomous routines using ARMS functions
+    // Example: Drive forward for 2 feet
+    armsController.driveForDistance(24.0_in); // Drive forward 24 inches (2 feet)
+
+    // Example: Turn right by 90 degrees
+    armsController.turnForAngle(90.0_deg);
 }
 
 /**
@@ -95,27 +91,47 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	std::shared_ptr<ChassisController> drive = 
-		ChassisControllerBuilder()
-			.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
-			.withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
-			.build();
-		std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
+    // Configure the chassis with tank drive
+    std::shared_ptr<ChassisController> drive =
+        ChassisControllerBuilder()
+            .withMotors({-18, -19, -20}, {11, 12, 13}) // Left side motors: {1, 2, 3}, Right side motors: {4, 5, 6}
+            .withDimensions(AbstractMotor::gearset::blue, {{3.25_in, 14.6875_in}, imev5BlueTPR}) // Adjust dimensions accordingly
+            .build();
 
-		Controller controller;
-		ControllerButton intakeInButton(ControllerDigital::R1);
-		ControllerButton intakeOutButton(ControllerDigital::L1);
-		Motor intakeMotor(15);		
-		
-	while (true) {
-		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
+	std::shared_ptr<SkidSteerModel> ssModel = std::dynamic_pointer_cast<SkidSteerModel>(drive->getModel());
+    // Create a controller object to read input
+    Controller controller;
 
-		if (intakeInButton.isPressed()) {
-            intakeMotor.moveVelocity(200);
-        } else if (intakeOutButton.isPressed()) {
-			intakeMotor.moveVelocity(-200);
+	ControllerButton intakeInButton(ControllerDigital::R1);
+	ControllerButton intakeOutButton(ControllerDigital::L1);
+    // Create objects for intake motors
+    MotorGroup intakeMotors({1, -2}); // Assuming intake motor is connected to port 7
+	Motor catapultMotor(-9);
+
+    while (true) {
+        // Drive control: Tank drive
+        ssModel->tank(controller.getAnalog(ControllerAnalog::leftY), controller.getAnalog(ControllerAnalog::rightY));
+
+        // Intake control
+        if (controller.getDigital(ControllerDigital::R1)) {
+            // If R1 button is pressed, intake in
+            intakeMotors.moveVelocity(200); // Adjust velocity as needed
+        } else if (controller.getDigital(ControllerDigital::L1)) {
+            // If R2 button is pressed, intake out
+            intakeMotors.moveVelocity(-200); // Adjust velocity as needed
         } else {
-			intakeMotor.moveVoltage(0);
+            // Otherwise, stop intake motor
+            intakeMotors.moveVelocity(0);
         }
-	}
+
+		if (controller.getDigital(ControllerDigital::A)) {
+			catapultMotor.moveVelocity(200);
+		} else {
+			catapultMotor.moveVelocity(0);
+		}
+
+        // Adjust velocity values and button mappings according to your setup
+        // You might need to change the button mappings or adjust the motor ports
+        // to match your actual hardware configuration.
+    }
 }
