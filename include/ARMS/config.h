@@ -9,17 +9,17 @@ namespace arms {
 #define ODOM_DEBUG 0
 
 // Negative numbers mean reversed motor
-#define LEFT_MOTORS 1, 2
-#define RIGHT_MOTORS -3, -4
-#define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
+#define LEFT_MOTORS -18, -19, -20
+#define RIGHT_MOTORS 11, 12, 13
+#define GEARSET pros::E_MOTOR_GEAR_BLUE // RPM of chassis motors
 
 // Ticks per inch
-#define TPI 1        // Encoder ticks per inch of forward robot movement
+#define TPI 58.765        // Encoder ticks per inch of forward robot movement
 #define MIDDLE_TPI 1 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
 #define TRACK_WIDTH                                                            \
-	0 // The distance between left and right wheels (or tracker wheels)
+	14.6875 // The distance between left and right wheels (or tracker wheels)
 #define MIDDLE_DISTANCE                                                        \
 	0 // Distance from middle wheel to the robot turning center
 
@@ -36,13 +36,13 @@ namespace arms {
 #define SETTLE_THRESH_LINEAR .5 // amount of linear movement for settling
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
 #define SETTLE_TIME 250         // amount of time to count as settled
-#define LINEAR_KP 1
-#define LINEAR_KI 0
-#define LINEAR_KD 0
+#define LINEAR_KP 0.7
+#define LINEAR_KI 0.35
+#define LINEAR_KD 0.35
 #define TRACKING_KP 60 // point tracking turning strength
 #define ANGULAR_KP 1
-#define ANGULAR_KI 0
-#define ANGULAR_KD 0
+#define ANGULAR_KI 0.5
+#define ANGULAR_KD 0.5
 #define MIN_ERROR                                                              \
 	5 // Minimum distance to target before angular componenet is disabled
 #define LEAD_PCT .6         // Go-to-pose lead distance ratio (0-1)

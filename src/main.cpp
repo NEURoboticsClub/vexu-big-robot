@@ -1,6 +1,9 @@
 #include "main.h"
 #include "ARMS/api.h"
 #include "ARMS/config.h"
+#include "ARMS/chassis.h"
+#include "ARMS/odom.h"
+#include "ARMS/pid.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -28,7 +31,8 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -60,21 +64,7 @@ void autonomous() {
 	// odomchas->driveToPoint({5_in, 0_m}, false);
 	// odomchas->driveToPoint({0_m, 1_m}, true);
 
-	// Configure ARMS parameters
-    ARMS::config robotConfig;
-    robotConfig.wheelbase = 18.0_in; // Example wheelbase in inches
-    robotConfig.wheelDiameter = 4.0_in; // Example wheel diameter in inches
-    // Add other relevant parameters as needed
-
-    // Initialize ARMS controller with configured parameters
-    ARMS::Controller armsController(robotConfig);
-
-    // Define autonomous routines using ARMS functions
-    // Example: Drive forward for 2 feet
-    armsController.driveForDistance(24.0_in); // Drive forward 24 inches (2 feet)
-
-    // Example: Turn right by 90 degrees
-    armsController.turnForAngle(90.0_deg);
+    arms::chassis::move(6.0);
 }
 
 /**
@@ -125,7 +115,7 @@ void opcontrol() {
         }
 
 		if (controller.getDigital(ControllerDigital::A)) {
-			catapultMotor.moveVelocity(200);
+			catapultMotor.moveVelocity(100);
 		} else {
 			catapultMotor.moveVelocity(0);
 		}
