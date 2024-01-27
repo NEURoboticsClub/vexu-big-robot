@@ -12,7 +12,7 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	arms::init();
+	// arms::init();
 }
 
 /**
@@ -46,25 +46,25 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-	// std::shared_ptr<OdomChassisController> odomchas =
-	// 	ChassisControllerBuilder()
-	// 			.withMotors({-18, -19, -20}, {11, 12, 13})
-	// 			.withGains(
-	// 				{0.0016, 0.00000, 0}, // Distance controller gains
-	// 				{0.0016, 0.0000, 0}, // Turn controller gains
-	// 				{0.0016, 0.0000, 0.00000}  // Angle controller gains (helps drive straight)
-	// 			 	)
-	// 			.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 14.6875_in}, imev5BlueTPR})
-	// 			.withOdometry()
-	// 			.buildOdometry();
+	std::shared_ptr<OdomChassisController> odomchas =
+		ChassisControllerBuilder()
+				.withMotors({-18, -19, -20}, {11, 12, 13})
+				.withGains(
+					{0.0016, 0.00000, 0}, // Distance controller gains
+					{0.0016, 0.0000, 0}, // Turn controller gains
+					{0.0016, 0.0000, 0.00000}  // Angle controller gains (helps drive straight)
+				 	)
+				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 14.6875_in}, imev5BlueTPR})
+				.withOdometry()
+				.buildOdometry();
 
 	
-	// odomchas->setState({0_m,0_m,0_deg});
+	odomchas->setState({0_m,0_m,0_deg});
 	// odomchas->turnToAngle(180_deg);
-	// odomchas->driveToPoint({5_in, 0_m}, false);
+	odomchas->driveToPoint({6_in, 0_m}, false);
 	// odomchas->driveToPoint({0_m, 1_m}, true);
 
-    arms::chassis::move(6.0);
+    // arms::chassis::move(6.0);
 }
 
 /**

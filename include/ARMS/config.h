@@ -14,7 +14,7 @@ namespace arms {
 #define GEARSET pros::E_MOTOR_GEAR_BLUE // RPM of chassis motors
 
 // Ticks per inch
-#define TPI 58.765        // Encoder ticks per inch of forward robot movement
+#define TPI 49        // Encoder ticks per inch of forward robot movement
 #define MIDDLE_TPI 1 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
