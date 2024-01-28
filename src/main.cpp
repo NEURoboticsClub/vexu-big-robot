@@ -81,47 +81,13 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    // Configure the chassis with tank drive
-    std::shared_ptr<ChassisController> drive =
-        ChassisControllerBuilder()
-            .withMotors({-18, -19, -20}, {11, 12, 13}) // Left side motors: {1, 2, 3}, Right side motors: {4, 5, 6}
-            .withDimensions(AbstractMotor::gearset::blue, {{3.25_in, 14.6875_in}, imev5BlueTPR}) // Adjust dimensions accordingly
-            .build();
-
-	std::shared_ptr<SkidSteerModel> ssModel = std::dynamic_pointer_cast<SkidSteerModel>(drive->getModel());
-    // Create a controller object to read input
     Controller controller;
 
-	ControllerButton intakeInButton(ControllerDigital::R1);
-	ControllerButton intakeOutButton(ControllerDigital::L1);
-    // Create objects for intake motors
-    MotorGroup intakeMotors({1, -2}); // Assuming intake motor is connected to port 7
-	Motor catapultMotor(-9);
-
     while (true) {
-        // Drive control: Tank drive
-        ssModel->tank(controller.getAnalog(ControllerAnalog::leftY), controller.getAnalog(ControllerAnalog::rightY));
-
-        // Intake control
-        if (controller.getDigital(ControllerDigital::R1)) {
-            // If R1 button is pressed, intake in
-            intakeMotors.moveVelocity(200); // Adjust velocity as needed
-        } else if (controller.getDigital(ControllerDigital::L1)) {
-            // If R2 button is pressed, intake out
-            intakeMotors.moveVelocity(-200); // Adjust velocity as needed
-        } else {
-            // Otherwise, stop intake motor
-            intakeMotors.moveVelocity(0);
-        }
-
-		if (controller.getDigital(ControllerDigital::A)) {
-			catapultMotor.moveVelocity(100);
-		} else {
-			catapultMotor.moveVelocity(0);
-		}
-
-        // Adjust velocity values and button mappings according to your setup
-        // You might need to change the button mappings or adjust the motor ports
-        // to match your actual hardware configuration.
+		drivebase.tankDrive(controller);
+		intake.toggleIntake(controller);
+		catapult.launch(controller);
+		latch.shut(controller);
+		climber.climb(controller);
     }
 }
