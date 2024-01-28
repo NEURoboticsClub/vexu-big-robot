@@ -1,11 +1,17 @@
 #include "subsystems/catapult.h"
 
 Catapult::Catapult(){
-    catapultSensor.reset();
-    sensorValue = catapultSensor.get();
-    lastSensorValue = catapultSensor.get();
+    catapultSensor.reset_position();
+    catapultSensor.set_data_rate(5);
+    sensorValue = 0;
     toLaunch = false;
     launching = false;
+}
+
+void Catapult::init() {
+    catapultSensor.reset_position();
+    catapultSensor.set_data_rate(5);
+    sensorValue = 0;
 }
 
 void Catapult::launch(Controller& controller){
@@ -18,12 +24,11 @@ void Catapult::launch(Controller& controller){
     }
 
     if (launching) {
-        lastSensorValue = sensorValue;
-        sensorValue = catapultSensor.get();
-        if (sensorValue > 330) {
-            catapultMotor.moveVelocity(20);
-        }
-        if (sensorValue < lastSensorValue) {
+        sensorValue = catapultSensor.get_position();
+        // std::cout << "sensorValue: " << sensorValue << std::endl;
+        if (sensorValue > 36000) {
+            catapultSensor.reset_position();
+            sensorValue = 0;
             catapultMotor.moveVelocity(0);
             launching = false;
         }

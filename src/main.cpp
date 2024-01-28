@@ -13,6 +13,7 @@
  */
 void initialize() {
 	// arms::init();
+	catapult.init();
 }
 
 /**
@@ -89,5 +90,6 @@ void opcontrol() {
 		catapult.launch(controller);
 		latch.shut(controller);
 		climber.climb(controller);
+		pros::delay(2);
     }
 }

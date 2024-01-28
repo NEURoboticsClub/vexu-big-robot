@@ -13,12 +13,12 @@ class Catapult
 {
     public:
         Catapult();
+        void init();
         void launch(Controller& controller);
     private:
         Motor catapultMotor = Motor(-9);
-        RotationSensor catapultSensor = RotationSensor(8);
+        pros::Rotation catapultSensor = pros::Rotation(8);
         double sensorValue;
-        double lastSensorValue;
         bool toLaunch;
         bool launching;
 };
