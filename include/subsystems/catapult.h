@@ -19,6 +19,7 @@ class Catapult
         Motor catapultMotor = Motor(-9);
         pros::Rotation catapultSensor = pros::Rotation(8);
         double sensorValue;
+        int countdown;
         bool toLaunch;
         bool launching;
 };
