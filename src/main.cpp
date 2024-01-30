@@ -1,20 +1,9 @@
 #include "main.h"
+#include "ARMS/api.h"
 #include "ARMS/config.h"
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
+#include "ARMS/chassis.h"
+#include "ARMS/odom.h"
+#include "ARMS/pid.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -23,7 +12,8 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	arms::init()
+	// arms::init();
+	catapult.init();
 }
 
 /**
@@ -42,7 +32,8 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -56,7 +47,11 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+	// drivebase.generatePath();
+	// odomchas->turnToAngle(180_deg);
+	// odomchas->driveToPoint({0_m, 1_m}, true);
+
+    // arms::chassis::move(6.0);
 }
 
 /**
@@ -73,29 +68,15 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	std::shared_ptr<ChassisController> drive = 
-		ChassisControllerBuilder()
-			.withMotors({2,-3},{4,-5},{17,-18},{11,-12})
-			.withDimensions(AbstractMotor::gearset::green, {{4_in, 11.5_in}, imev5GreenTPR})
-			.build();
+    Controller controller;
+	catapult.init();
 
-		std::shared_ptr<XDriveModel> xModel = std::dynamic_pointer_cast<XDriveModel>(drive->getModel());
-
-		Controller controller;
-		ControllerButton intakeInButton(ControllerDigital::R1);
-		ControllerButton intakeOutButton(ControllerDigital::L1);
-		Motor intakeMotor(15);
-
-
-	while (true) {
-		xModel->xArcade(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
-
-		if (intakeInButton.isPressed()) {
-            intakeMotor.moveVelocity(200);
-        } else if (intakeOutButton.isPressed()) {
-			intakeMotor.moveVelocity(-200);
-        } else {
-			intakeMotor.moveVoltage(0);
-        }
-	}
+    while (true) {
+		drivebase.tankDrive(controller);
+		intake.toggleIntake(controller);
+		catapult.launch(controller);
+		latch.shut(controller);
+		climber.climb(controller);
+		pros::delay(2);
+    }
 }
