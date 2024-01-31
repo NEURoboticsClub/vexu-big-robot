@@ -16,7 +16,8 @@ class Catapult
         void init();
         void launch(Controller& controller);
     private:
-        Motor catapultMotor = Motor(-9);
+        Motor catapultMotorLeft = Motor(-9);
+        Motor catapultMotorRight = Motor(17);
         pros::Rotation catapultSensor = pros::Rotation(8);
         double sensorValue;
         int countdown;

@@ -14,6 +14,8 @@ void Catapult::init() {
     catapultSensor.set_data_rate(5);
     sensorValue = 0;
     countdown = 500;
+    catapultMotorLeft.setBrakeMode(AbstractMotor::brakeMode::brake);
+    catapultMotorRight.setBrakeMode(AbstractMotor::brakeMode::brake);
 }
 
 void Catapult::launch(Controller& controller){
@@ -24,7 +26,8 @@ void Catapult::launch(Controller& controller){
             countdown--;
         } else {
             if (sensorValue < 200) {
-            catapultMotor.moveVelocity(0);
+            catapultMotorLeft.moveVelocity(0);
+            catapultMotorRight.moveVelocity(0);
             launching = false;
             }
         }
@@ -34,7 +37,8 @@ void Catapult::launch(Controller& controller){
         if (toLaunch) {
             launching = true;
             countdown = 500;
-            catapultMotor.moveVelocity(200);
+            catapultMotorLeft.moveVelocity(200);
+            catapultMotorRight.moveVelocity(200);
         }
     }
 }
