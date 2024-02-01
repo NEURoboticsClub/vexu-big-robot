@@ -52,6 +52,8 @@ void autonomous() {
 	// odomchas->driveToPoint({0_m, 1_m}, true);
 
     // arms::chassis::move(6.0);
+	drivebase.init();
+	drivebase.moveDistance(1_ft);
 }
 
 /**
