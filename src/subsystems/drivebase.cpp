@@ -10,9 +10,9 @@ Drivebase::Drivebase(){
         ChassisControllerBuilder()
 				.withMotors(motorsLeft, motorsRight)
 				.withGains(
-					{0.0027, 0.0175, 0.000085}, // Distance controller gains
-					{0.0001, 0.0000, 0}, // Turn controller gains
-					{0.0001, 0.0000, 0.00000}  // Angle controller gains (helps drive straight)
+					{0.0027, 0.005, 0.000085}, // 0.0027, 0.051, 0.000085
+					{0.000001, 0.000, 0.000}, // Turn controller gains
+					{0.0065, 0.00075, 0.00005}  // Angle controller gains (helps drive straight)
 				 	)
 				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 14.6875_in}, imev5BlueTPR})
 				.withOdometry()
@@ -33,7 +33,7 @@ void Drivebase::tankDrive(Controller& controller){
 
 void Drivebase::init() {
     chassisTank->setMaxVelocity(400);
-    chassisGeneric->setMaxVelocity(150);
+    chassisGeneric->setMaxVelocity(200);
     chassisGeneric->setState({0_m, 0_m, 0_deg});
     profileController->reset();
 }
