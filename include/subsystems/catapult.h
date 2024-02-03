@@ -14,6 +14,7 @@ class Catapult
     public:
         Catapult();
         void init();
+        void reset(Controller& controller);
         void launch(Controller& controller);
         void block(Controller& controller);
         void launch();

@@ -26,6 +26,22 @@ void Catapult::init() {
     isDrawing = false;
 }
 
+void Catapult::reset(Controller& controller) {
+    if (controller.getDigital(ControllerDigital::up)) {
+        catapultSensor.reset_position();
+        catapultSensor.set_data_rate(5);
+        sensorValue = 0;
+        countdown = 500;
+        toLaunch = false;
+        launching = false;
+        toBlock = false;
+        blocking = false;
+        previousState = false;
+        currentState = false;
+        isDrawing = false;
+    }
+}
+
 void Catapult::launch(Controller& controller){
     if (!blocking) {
         if (launching) {
@@ -107,14 +123,16 @@ void Catapult::block() {
 }
 
 void Catapult::manual(Controller& controller) {
-    currentState = controller.getDigital(ControllerDigital::down);
+    // currentState = controller.getDigital(ControllerDigital::down);
     
-    if (currentState != previousState) {
-        if (currentState) {
-            isDrawing = !isDrawing;
-        }
-        previousState = currentState;
-    }
+    // if (currentState != previousState) {
+    //     if (currentState) {
+    //         isDrawing = !isDrawing;
+    //     }
+    //     previousState = currentState;
+    // }
+
+    isDrawing = controller.getDigital(ControllerDigital::down);
 
     if (isDrawing) {
         launching = false;

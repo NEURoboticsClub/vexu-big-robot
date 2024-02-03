@@ -88,6 +88,7 @@ void opcontrol() {
 		catapult.manual(controller);
 		catapult.launch(controller);
 		catapult.block(controller);
+		catapult.reset(controller);
 		latch.shut(controller);
 		climber.climb(controller);
 		pros::delay(2);
