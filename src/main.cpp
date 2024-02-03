@@ -49,6 +49,8 @@ void competition_initialize() {
 void autonomous() {
 
 	drivebase.init();
+	catapult.init();
+
 	drivebase.moveDistance(2.5_ft);
 	drivebase.turnAngle(130_deg);
 	intake.moveIn();
@@ -78,12 +80,14 @@ void autonomous() {
  */
 void opcontrol() {
     Controller controller;
-	catapult.init();
+	// catapult.init();
 
     while (true) {
 		drivebase.tankDrive(controller);
 		intake.toggleIntake(controller);
+		catapult.manual(controller);
 		catapult.launch(controller);
+		catapult.block(controller);
 		latch.shut(controller);
 		climber.climb(controller);
 		pros::delay(2);

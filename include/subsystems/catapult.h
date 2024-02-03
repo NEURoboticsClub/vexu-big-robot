@@ -15,6 +15,10 @@ class Catapult
         Catapult();
         void init();
         void launch(Controller& controller);
+        void block(Controller& controller);
+        void launch();
+        void block();
+        void manual(Controller& controller);
     private:
         Motor catapultMotorLeft = Motor(-9);
         Motor catapultMotorRight = Motor(17);
@@ -23,6 +27,11 @@ class Catapult
         int countdown;
         bool toLaunch;
         bool launching;
+        bool toBlock;
+        bool blocking;
+        bool currentState;
+        bool previousState;
+        bool isDrawing;
 };
 
 #endif
