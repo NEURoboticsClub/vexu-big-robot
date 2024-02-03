@@ -39,3 +39,13 @@ void Intake::toggleIntake(Controller& controller){
         intakeMotors.moveVelocity(0);
     }
 }
+
+void Intake::moveIn(){
+    intakeMotors.moveVelocity(600);
+}
+void Intake::stop(){
+    intakeMotors.moveVelocity(0);
+}
+void Intake::moveout(){
+    intakeMotors.moveVelocity(-600);
+}

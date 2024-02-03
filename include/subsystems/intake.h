@@ -14,8 +14,11 @@ class Intake
     public:
         Intake();
         void toggleIntake(Controller& controller);
+        void moveIn();
+        void stop();
+        void moveout();
     private:
-        MotorGroup intakeMotors = MotorGroup({1, -10});
+        MotorGroup intakeMotors = MotorGroup({16, -10});
         bool previousStateIn;
         bool currentStateIn;
         bool previousStateOut;

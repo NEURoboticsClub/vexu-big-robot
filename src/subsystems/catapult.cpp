@@ -11,11 +11,11 @@ Catapult::Catapult(){
 
 void Catapult::init() {
     catapultSensor.reset_position();
-    catapultSensor.set_data_rate(5);
+    catapultSensor.set_data_rate(2);
     sensorValue = 0;
     countdown = 500;
-    catapultMotorLeft.setBrakeMode(AbstractMotor::brakeMode::brake);
-    catapultMotorRight.setBrakeMode(AbstractMotor::brakeMode::brake);
+    catapultMotorLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
+    catapultMotorRight.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 
 void Catapult::launch(Controller& controller){
@@ -24,8 +24,10 @@ void Catapult::launch(Controller& controller){
         std::cout << "sensorValue: " << sensorValue << std::endl;
         if (countdown > 0) {
             countdown--;
-        } else {
+        } 
+        else {
             if (sensorValue < 200) {
+            std::cout << "sensorValue End: " << sensorValue << std::endl;
             catapultMotorLeft.moveVelocity(0);
             catapultMotorRight.moveVelocity(0);
             launching = false;

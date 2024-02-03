@@ -47,13 +47,20 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-	// drivebase.generatePath();
-	// odomchas->turnToAngle(180_deg);
-	// odomchas->driveToPoint({0_m, 1_m}, true);
 
-    // arms::chassis::move(6.0);
 	drivebase.init();
-	drivebase.turnAngle(180_deg);
+	drivebase.moveDistance(2.5_ft);
+	drivebase.turnAngle(130_deg);
+	intake.moveIn();
+	drivebase.moveDistance(1.75_ft);
+	pros::delay(500);
+	intake.stop();
+	drivebase.moveDistance(-0.5_ft);
+	drivebase.turnAngle(95_deg);
+	drivebase.moveDistance(-1.5_ft);
+	drivebase.turnAngle(-50_deg);
+	drivebase.moveDistance(-6_ft);
+
 }
 
 /**

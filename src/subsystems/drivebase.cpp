@@ -1,7 +1,7 @@
 #include "subsystems/drivebase.h"
 
 Drivebase::Drivebase(){
-    MotorGroup motorsLeft = {-12, -13};
+    MotorGroup motorsLeft = {-20, -13};
     MotorGroup motorsRight = {18, 19};
     motorsLeft.setBrakeMode(AbstractMotor::brakeMode::brake);
     motorsRight.setBrakeMode(AbstractMotor::brakeMode::brake);
@@ -11,10 +11,10 @@ Drivebase::Drivebase(){
 				.withMotors(motorsLeft, motorsRight)
 				.withGains(
 					{0.0027, 0.005, 0.000085}, // 0.0027, 0.051, 0.000085
-					{0.000001, 0.000, 0.000}, // Turn controller gains
-					{0.0065, 0.00075, 0.00005}  // Angle controller gains (helps drive straight)
+					{0.003, 0.001, 0.000}, // Turn controller gains
+					{0.0055, 0.00075, 0.00005}  // Angle controller gains (helps drive straight)
 				 	)
-				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 14.6875_in}, imev5BlueTPR})
+				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 16.5_in}, imev5BlueTPR}) //Actual Wheel Track: 14.6875_in
 				.withOdometry()
 				.buildOdometry();
     
