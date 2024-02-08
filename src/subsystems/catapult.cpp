@@ -50,7 +50,7 @@ void Catapult::launch(Controller& controller){
                 countdown--;
             } 
             else {
-                if (sensorValue < 200) {
+                if (sensorValue < 400) {
                 catapultMotorLeft.moveVelocity(0);
                 catapultMotorRight.moveVelocity(0);
                 launching = false;
@@ -77,7 +77,7 @@ void Catapult::block(Controller& controller) {
                 countdown--;
             } 
             else {
-                if (sensorValue < 1500) {
+                if (sensorValue < 2500) {
                 catapultMotorLeft.moveVelocity(0);
                 catapultMotorRight.moveVelocity(0);
                 blocking = false;
@@ -101,7 +101,7 @@ void Catapult::launch() {
     catapultMotorRight.moveVelocity(200);
     pros::delay(1000);
     sensorValue = -1 * catapultSensor.get_position();
-    while (sensorValue >= 200) {
+    while (sensorValue >= 400) {
         pros::delay(2);
         sensorValue = -1 * catapultSensor.get_position();
     }
@@ -114,7 +114,7 @@ void Catapult::block() {
     catapultMotorRight.moveVelocity(200);
     pros::delay(1000);
     sensorValue = -1 * catapultSensor.get_position();
-    while (sensorValue >= 1500) {
+    while (sensorValue >= 2500) {
         pros::delay(2);
         sensorValue = -1 * catapultSensor.get_position();
     }
@@ -143,4 +143,8 @@ void Catapult::manual(Controller& controller) {
         catapultMotorLeft.moveVelocity(0);
         catapultMotorRight.moveVelocity(0);
     }
+}
+
+bool Catapult::isUp() {
+    return launching || blocking || isDrawing;
 }

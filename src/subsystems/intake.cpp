@@ -9,7 +9,7 @@ Intake::Intake(){
     intakeOut = false;
 }
 
-void Intake::toggleIntake(Controller& controller){
+void Intake::toggleIntake(Controller& controller, bool catUp){
     currentStateIn = controller.getDigital(ControllerDigital::R1);
     currentStateOut = controller.getDigital(ControllerDigital::L1);
     
@@ -29,7 +29,10 @@ void Intake::toggleIntake(Controller& controller){
         previousStateOut = currentStateOut;
     }
 
-    if(intakeIn){
+    if (catUp) {
+        intakeMotors.moveVelocity(0);
+    }
+    else if(intakeIn){
         intakeMotors.moveVelocity(600);
     }
     else if(intakeOut){
@@ -41,7 +44,7 @@ void Intake::toggleIntake(Controller& controller){
 }
 
 void Intake::moveIn(){
-    intakeMotors.moveVelocity(600);
+    intakeMotors.moveVelocity(300);
 }
 void Intake::stop(){
     intakeMotors.moveVelocity(0);

@@ -20,6 +20,7 @@ class Catapult
         void launch();
         void block();
         void manual(Controller& controller);
+        bool isUp();
     private:
         Motor catapultMotorLeft = Motor(-9);
         Motor catapultMotorRight = Motor(17);

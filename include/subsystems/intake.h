@@ -13,7 +13,7 @@ class Intake
 {
     public:
         Intake();
-        void toggleIntake(Controller& controller);
+        void toggleIntake(Controller& controller, bool catUp);
         void moveIn();
         void stop();
         void moveout();
