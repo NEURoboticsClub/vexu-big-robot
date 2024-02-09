@@ -19,8 +19,7 @@ void Catapult::init() {
     catapultSensor.set_data_rate(2);
     sensorValue = 0;
     countdown = 500;
-    catapultMotorLeft.setBrakeMode(AbstractMotor::brakeMode::hold);
-    catapultMotorRight.setBrakeMode(AbstractMotor::brakeMode::hold);
+    catapultMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
     previousState = false;
     currentState = false;
     isDrawing = false;
@@ -51,8 +50,7 @@ void Catapult::launch(Controller& controller){
             } 
             else {
                 if (sensorValue < 400) {
-                catapultMotorLeft.moveVelocity(0);
-                catapultMotorRight.moveVelocity(0);
+                catapultMotors.moveVelocity(0);
                 launching = false;
                 }
             }
@@ -62,8 +60,7 @@ void Catapult::launch(Controller& controller){
             if (toLaunch) {
                 launching = true;
                 countdown = 500;
-                catapultMotorLeft.moveVelocity(200);
-                catapultMotorRight.moveVelocity(200);
+                catapultMotors.moveVelocity(200);
             }
         }
     }
@@ -78,8 +75,7 @@ void Catapult::block(Controller& controller) {
             } 
             else {
                 if (sensorValue < 2500) {
-                catapultMotorLeft.moveVelocity(0);
-                catapultMotorRight.moveVelocity(0);
+                catapultMotors.moveVelocity(0);
                 blocking = false;
                 }
             }
@@ -89,37 +85,32 @@ void Catapult::block(Controller& controller) {
             if (toBlock) {
                 blocking = true;
                 countdown = 500;
-                catapultMotorLeft.moveVelocity(200);
-                catapultMotorRight.moveVelocity(200);
+                catapultMotors.moveVelocity(200);
             }
         }
     }
 }
 
 void Catapult::launch() {
-    catapultMotorLeft.moveVelocity(200);
-    catapultMotorRight.moveVelocity(200);
+    catapultMotors.moveVelocity(200);
     pros::delay(1000);
     sensorValue = -1 * catapultSensor.get_position();
     while (sensorValue >= 400) {
         pros::delay(2);
         sensorValue = -1 * catapultSensor.get_position();
     }
-    catapultMotorLeft.moveVelocity(0);
-    catapultMotorRight.moveVelocity(0);
+    catapultMotors.moveVelocity(0);
 }
 
 void Catapult::block() {
-    catapultMotorLeft.moveVelocity(200);
-    catapultMotorRight.moveVelocity(200);
+    catapultMotors.moveVelocity(200);
     pros::delay(1000);
     sensorValue = -1 * catapultSensor.get_position();
     while (sensorValue >= 2500) {
         pros::delay(2);
         sensorValue = -1 * catapultSensor.get_position();
     }
-    catapultMotorLeft.moveVelocity(0);
-    catapultMotorRight.moveVelocity(0);
+    catapultMotors.moveVelocity(0);
 }
 
 void Catapult::manual(Controller& controller) {
@@ -137,11 +128,9 @@ void Catapult::manual(Controller& controller) {
     if (isDrawing) {
         launching = false;
         blocking = false;
-        catapultMotorLeft.moveVelocity(100);
-        catapultMotorRight.moveVelocity(100);
+        catapultMotors.moveVelocity(100);
     } else if (!launching && !blocking) {
-        catapultMotorLeft.moveVelocity(0);
-        catapultMotorRight.moveVelocity(0);
+        catapultMotors.moveVelocity(0);
     }
 }
 

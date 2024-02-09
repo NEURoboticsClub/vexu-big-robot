@@ -25,6 +25,8 @@ class Drivebase
         void moveDistance(okapi::QLength distance);
         std::shared_ptr<OdomChassisController> chassisGeneric;
     private:
+        MotorGroup motorsLeft = {-20, -13};
+        MotorGroup motorsRight = {18, 19};
         std::shared_ptr<SkidSteerModel> chassisTank;
         std::shared_ptr<AsyncMotionProfileController> profileController;
 

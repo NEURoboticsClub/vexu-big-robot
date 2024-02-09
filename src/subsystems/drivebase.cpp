@@ -1,8 +1,6 @@
 #include "subsystems/drivebase.h"
 
 Drivebase::Drivebase(){
-    MotorGroup motorsLeft = {-20, -13};
-    MotorGroup motorsRight = {18, 19};
     motorsLeft.setBrakeMode(AbstractMotor::brakeMode::brake);
     motorsRight.setBrakeMode(AbstractMotor::brakeMode::brake);
 

@@ -22,8 +22,7 @@ class Catapult
         void manual(Controller& controller);
         bool isUp();
     private:
-        Motor catapultMotorLeft = Motor(-9);
-        Motor catapultMotorRight = Motor(17);
+        MotorGroup catapultMotors = {-9, 17};
         pros::Rotation catapultSensor = pros::Rotation(8);
         double sensorValue;
         int countdown;
