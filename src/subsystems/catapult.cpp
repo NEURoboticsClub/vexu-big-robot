@@ -19,7 +19,7 @@ void Catapult::init() {
     catapultSensor.set_data_rate(2);
     sensorValue = 0;
     countdown = 500;
-    catapultMotors.setBrakeMode(AbstractMotor::brakeMode::hold);
+    catapultMotors.setBrakeMode(AbstractMotor::brakeMode::brake);
     previousState = false;
     currentState = false;
     isDrawing = false;
