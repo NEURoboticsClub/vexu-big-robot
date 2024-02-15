@@ -10,7 +10,7 @@ Drivebase::Drivebase(){
 				.withGains(
 					{0.0016, 0.00003, 0.000025}, // 0.0027, 0.051, 0.000085
 					{0.0016, 0.00003, 0.000025}, // Turn controller gains
-					{0.0018, 0.00003, 0.000035}  // Angle controller gains (helps drive straight)
+					{0.0016, 0.00003, 0.000025}  // Angle controller gains (helps drive straight)
 				 	)
 				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.35_in, 13.9_in}, imev5BlueTPR}) //Actual Wheel Track: 14.6875_in
 				.withOdometry()

@@ -50,57 +50,57 @@ void autonomous() {
 
 	drivebase.init();
 	catapult.init();
-	for (int i = 0; i < 6; i++) {
-		drivebase.moveDistance(4_ft);
-		drivebase.turnAngle(182_deg);
-	}
+	// for (int i = 0; i < 6; i++) {
+	// 	drivebase.moveDistance(4_ft);
+	// 	drivebase.turnAngle(190_deg);
+	// }
 
-	// drivebase.moveDistance(2.4_ft);
-	// drivebase.turnAngle(130_deg);
-	// catapult.block();
-	// intake.moveIn();
-	// drivebase.moveDistance(1.85_ft);
-	// pros::delay(500);
-	// intake.stop();
-	// drivebase.moveDistance(-0.5_ft);
-	// drivebase.turnAngle(95_deg);
-	// drivebase.moveDistance(-13_in);
-	// drivebase.turnAngle(-50_deg);
-	// drivebase.moveDistance(-6_ft);
-	// drivebase.turnAngle(125_deg);
-	// drivebase.moveDistance(1.5_ft);
-	// drivebase.turnAngle(-15_deg);
-	// drivebase.moveDistance(4_in);
-	// intake.moveout();
-	// pros::delay(500);
-	// intake.stop();
-	// drivebase.turnAngle(-15_deg);
-	// drivebase.moveDistance(-3_in);
-	// drivebase.turnAngle(205_deg);
-	// drivebase.moveDistance(-1.5_ft);
-	// drivebase.turnAngle(20_deg);
-	// drivebase.moveDistance(1.25_ft);
-	// drivebase.turnAngle(-90_deg);
-	// intake.moveIn();
-	// drivebase.moveDistance(14_in);
-	// pros::delay(500);
-	// intake.stop();
-	// drivebase.moveDistance(-3_in);
-	// drivebase.turnAngle(-90_deg);
-	// drivebase.moveDistance(9_in);
-	// drivebase.turnAngle(-45_deg);
-	// drivebase.moveDistance(3_in);
-	// intake.moveout();
-	// pros::delay(500);
-	// drivebase.moveDistance(-6_in);
-	// intake.stop();
-	// drivebase.turnAngle(215_deg);
-	// drivebase.moveDistance(-1.5_ft);
-	// drivebase.turnAngle(30_deg);
-	// drivebase.moveDistance(1.5_ft);
-	// drivebase.turnAngle(45_deg);
-	// drivebase.moveDistance(3.5_ft);
-	// drivebase.turnAngle(45_deg);
+	drivebase.moveDistance(2.4_ft);
+	drivebase.turnAngle(130_deg);
+	catapult.block();
+	intake.moveIn();
+	drivebase.moveDistance(1.85_ft);
+	pros::delay(500);
+	intake.stop();
+	drivebase.moveDistance(-0.5_ft);
+	drivebase.turnAngle(95_deg);
+	drivebase.moveDistance(-13_in);
+	drivebase.turnAngle(-50_deg);
+	drivebase.moveDistance(-6_ft);
+	drivebase.turnAngle(125_deg);
+	drivebase.moveDistance(1.5_ft);
+	drivebase.turnAngle(-15_deg);
+	drivebase.moveDistance(4_in);
+	intake.moveout();
+	pros::delay(500);
+	intake.stop();
+	drivebase.turnAngle(-15_deg);
+	drivebase.moveDistance(-3_in);
+	drivebase.turnAngle(205_deg);
+	drivebase.moveDistance(-1.5_ft);
+	drivebase.turnAngle(20_deg);
+	drivebase.moveDistance(1.25_ft);
+	drivebase.turnAngle(-90_deg);
+	intake.moveIn();
+	drivebase.moveDistance(14_in);
+	pros::delay(500);
+	intake.stop();
+	drivebase.moveDistance(-3_in);
+	drivebase.turnAngle(-90_deg);
+	drivebase.moveDistance(9_in);
+	drivebase.turnAngle(-45_deg);
+	drivebase.moveDistance(3_in);
+	intake.moveout();
+	pros::delay(500);
+	drivebase.moveDistance(-6_in);
+	intake.stop();
+	drivebase.turnAngle(215_deg);
+	drivebase.moveDistance(-1.5_ft);
+	drivebase.turnAngle(30_deg);
+	drivebase.moveDistance(1.5_ft);
+	drivebase.turnAngle(45_deg);
+	drivebase.moveDistance(3.5_ft);
+	drivebase.turnAngle(45_deg);
 }
 
 /**
