@@ -8,11 +8,11 @@ Drivebase::Drivebase(){
         ChassisControllerBuilder()
 				.withMotors(motorsLeft, motorsRight)
 				.withGains(
-					{0.0027, 0.005, 0.000085}, // 0.0027, 0.051, 0.000085
-					{0.003, 0.001, 0.000}, // Turn controller gains
-					{0.0055, 0.00075, 0.00005}  // Angle controller gains (helps drive straight)
+					{0.0016, 0.00003, 0.000025}, // 0.0027, 0.051, 0.000085
+					{0.0016, 0.00003, 0.000025}, // Turn controller gains
+					{0.0018, 0.00003, 0.000035}  // Angle controller gains (helps drive straight)
 				 	)
-				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.25_in, 16.5_in}, imev5BlueTPR}) //Actual Wheel Track: 14.6875_in
+				.withDimensions({AbstractMotor::gearset::blue, (60.0 / 36.0)}, {{3.35_in, 13.9_in}, imev5BlueTPR}) //Actual Wheel Track: 14.6875_in
 				.withOdometry()
 				.buildOdometry();
     
@@ -31,7 +31,7 @@ void Drivebase::tankDrive(Controller& controller){
 
 void Drivebase::init() {
     chassisTank->setMaxVelocity(400);
-    chassisGeneric->setMaxVelocity(200);
+    chassisGeneric->setMaxVelocity(600);
     chassisGeneric->setState({0_m, 0_m, 0_deg});
     profileController->reset();
 }
